@@ -1,3 +1,9 @@
+- name: Add clustering features to the feature list
+  set_fact:
+    extra_features: "{{ extra_features + clustering_features }}"
+  when:
+   - cluster
+
 - name: Build Karaf feature list
   set_fact:
     features: "{{ default_features + extra_features }}"

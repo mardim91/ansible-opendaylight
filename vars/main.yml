@@ -31,6 +31,11 @@ default_features:
 # CLIs is an anti-goal for CI/CD and automated deployments generally.
 extra_features: []
 
+cluster: false
+clustering_features:
+  - 'odl-mdsal-clustering'
+  - 'odl-jolokia'
+
 # Specifies the port for the ODL northbound REST interface to listen on.
 # This was added because OpenStack's Swift project uses a conflicting port.
 nb_rest_port: 8080
