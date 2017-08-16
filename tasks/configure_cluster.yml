@@ -1,0 +1,9 @@
+- name: Add module-shards.conf file
+  template:  
+    src: "module-shards.conf.j2"
+    dest: "/opt/opendaylight/configuration/initial/module-shards.conf"
+  
+#- name: Add akka.conf file 
+  #  src: "akka.conf.j2"
+  #  dest: "/opt/opendaylight/configuration/initial/akka.conf"
+   
