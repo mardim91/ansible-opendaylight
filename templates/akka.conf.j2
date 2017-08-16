@@ -1,3 +1,17 @@
+# {{ ansible_managed }}
+
+{% set odl_cluster_list = [] %}
+{% set host_ip = "" %}
+
+{% for host in groups["neutron_server_container"]  %}
+   {% if inventory_hostname|string == host|string %}
+      #{% set host_ip = hostvars[host]['container_address']|string %}
+      {% set host_ip = "kati" %}
+   {% endif %}
+   {% set ip_address =  hostvars[host]['container_address']|string %}
+   {% set _ = odl_cluster_list.append('"' + "akka.tcp://opendaylight-cluster-data@" + ip_address + ":" + "2550" + '"')  %}
+{% endfor %}
+pame={{ host_ip }}
 
 odl-cluster-data {
   akka {
@@ -20,8 +34,7 @@ odl-cluster-data {
 
     cluster {
       # Remove ".tcp" when using artery.
-      seed-nodes = ["akka.tcp://opendaylight-cluster-data@172.29.238.255:2550","akka.tcp://opendaylight-cluster-data@172.29.236.55:2550","akka.tcp://opendaylight-cluster-data@172.29.239.6:2550"]
-
+      seed-nodes = [{{ odl_cluster_list | join(',') }}]
       roles = [
         "member-1"
       ]
