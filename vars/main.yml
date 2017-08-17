@@ -31,14 +31,17 @@ init_features:
 # CLIs is an anti-goal for CI/CD and automated deployments generally.
 extra_features: []
 
-#cluster: false
+cluster: false
 clustering_features:
   - 'odl-mdsal-clustering'
   - 'odl-jolokia'
-  when:
-   - cluster
 
-default_features: "{{ init_features }} + {{ clustering_features }}"
+default_features: |-
+  {% set features = init_features %}
+  {% if cluster %}
+  {% set _ = features.extend(clustering_features) %}
+  {% endif %}
+  {{ features }}
 
 # Specifies the port for the ODL northbound REST interface to listen on.
 # This was added because OpenStack's Swift project uses a conflicting port.
