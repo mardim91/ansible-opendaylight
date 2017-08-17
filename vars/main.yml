@@ -15,7 +15,7 @@
 # potentially manually installing features, but that's about it.
 # It's better to avoid that manual step by overriding the extra_features
 # list with the additional ODL features required by your use-case.
-default_features:
+init_features:
   - 'config'
   - 'standard'
   - 'region'
@@ -32,9 +32,13 @@ default_features:
 extra_features: []
 
 #cluster: false
-#clustering_features:
-#  - 'odl-mdsal-clustering'
-#  - 'odl-jolokia'
+clustering_features:
+  - 'odl-mdsal-clustering'
+  - 'odl-jolokia'
+  when:
+   - cluster
+
+default_features: "{{ init_features }} + {{ clustering_features }}"
 
 # Specifies the port for the ODL northbound REST interface to listen on.
 # This was added because OpenStack's Swift project uses a conflicting port.
