@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-{% set members_list = [] %}
+{%- set members_list = [] %}
 
 {% for host in groups["neutron_server_container"]  %}
    {% set indexing = loop.index|string %}
